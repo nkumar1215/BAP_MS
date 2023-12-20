@@ -1,0 +1,25 @@
+library(zoo)
+library(scales)
+
+bp_file <- c("BAP.stat.gz","BAP.chr01.stat.gz","BAP.chr02.stat.gz","BAP.chr03.stat.gz","BAP.chr04.stat.gz","BAP.chr05.stat.gz","BAP.chr06.stat.gz","BAP.chr07.stat.gz","BAP.chr08.stat.gz","BAP.chr09.stat.gz","BAP.chr10.stat.gz")
+
+png("LD_decay.png",width=10,height=7,res=600,unit="in",type="cairo")
+par(mai=c(1,1,0.5,0.5))
+plot(0,0,xlim=c(0,600000),ylim=c(0,1),axes=F, type="n",xlab="Distance (Kb)",ylab=expression(r^2),cex.lab=1.5)
+axis(1,at=seq(0,600000,length=5),labels=seq(0,600,length=5))
+axis(2,at=c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0),labels=c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0))
+col <- c("red","chocolate","coral4","cornflowerblue","cornsilk4","cyan2","darkblue","darkgoldenrod2","blue","blueviolet","darkolivegreen4")
+for(i in c(2:11,1)){
+    print(i)
+    ld <- read.table(bp_file[i], header=F)
+    
+    rolling_mean <- rollmean(ld$V2, k=50, fill=NA)
+    #smoothingSpline = smooth.spline(ld$V1,ld$V2, df=60) # spar=0.2)
+    lines(x=ld$V1, y=rolling_mean, col=alpha(col[i], 0.5), lwd=ifelse(i==1,2,1),lty=2)
+}
+
+legend("topright",legend=c("Whole genome","Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10"),pch=15,col=col,bty="n",cex=1)
+#legend(300000,0.6,legend=c("RILS","Landraces"),lty=c(2,1),bty="n",lwd=3,cex=1.5)
+dev.off()
+
+warnings()

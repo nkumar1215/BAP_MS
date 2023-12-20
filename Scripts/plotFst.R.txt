@@ -1,0 +1,19 @@
+library(ggbio)
+require(biovizBase)
+require(GenomicRanges)
+
+df <- read.table("Fst_ps_1Mb.windowed.weir.fst", header=T)
+colnames(df) <- c("Chr", "Start", "End", "Variant_Count", "Weighted_Fst", "Mean_Fst")
+head(df)
+
+gr.snp <- transformDfToGr(df, seqnames = "Chr", start = "Start", end="End")
+sequence_lengths <- c(80884392, 77742459, 74386277, 68658214, 71854669, 61277060, 65505356, 62686529, 59416394, 61233695)
+names(sequence_lengths) <- names(seqlengths(gr.snp))
+seqlengths(gr.snp) <- sequence_lengths
+
+# autoplot(gr.snp, geom="point", coord="genome", aes(y=MEAN_FST))
+g <- plotGrandLinear(gr.snp, aes(y=Mean_Fst), color=c("#000000", "#888888"), geom="line", spaceline=TRUE)
+g + theme_clear()
+g + geom_hline(yintercept = mean(df$Mean_Fst) + sd(df$Mean_Fst), linetype="dotted") + 
+    geom_hline(yintercept = mean(df$Mean_Fst) + 2*sd(df$Mean_Fst), linetype="dashed") + theme_clear()
+ggsave("fst_plot.png", dpi=600, width=12, height=5, units="in")

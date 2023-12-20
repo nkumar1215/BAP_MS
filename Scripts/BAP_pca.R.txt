@@ -1,0 +1,63 @@
+library(ggplot2)
+library(RColorBrewer)
+
+setwd("/zfs/tillers/lucas/BAP/variant_calling/results/joint_calling/hard_filtered/gwas/compare_VCFs")
+
+data <- read.csv("GAPIT.PCA.csv")
+admixture <- read.csv("admix.plot_data.csv", header=F)
+colnames(admixture) <- c("taxa", "V1", "Pop")
+# colnames(admixture) <- c("taxa", "Sp", paste0("V", as.character(1:11)), "Admixture")
+all_data <- merge(data, admixture, by="taxa")
+all_data$Pop <- as.factor(all_data$Pop)
+
+# my_graph <- ggplot(all_data, aes(x=PC1, y=PC2), color=Admixture) + 
+#   geom_point(aes(color=Admixture)) + scale_color_brewer(palette="Paired") + 
+#   theme(panel.background = element_rect(fill = "black"),        
+#         panel.grid.major = element_blank(),
+#         panel.grid.minor = element_blank(),
+#         
+#         #legend.key.size = unit(2, 'cm'), #change legend key size
+#         legend.key.height = unit(1, 'cm'), #change legend key height
+#         legend.key.width = unit(1, 'cm'), #change legend key width
+#         legend.title = element_text(size=14), #change legend title font size
+#         legend.text = element_text(size=12)) + guides(colour = guide_legend(override.aes = list(size=10)))
+# my_graph + labs(x = as.character("PC1   x.x%"), y = as.character("PC2   7.16%"))
+# ggsave("admixture.jpg", dpi = 600)
+
+my_graph <- ggplot(all_data, aes(x=PC1, y=PC2), color=Pop) + 
+  geom_point(aes(color=Pop)) + scale_color_brewer(palette="Set1") + 
+  theme(panel.background = element_rect(fill = "black"),        
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        
+        legend.key.height = unit(1, 'cm'), #change legend key height
+        legend.key.width = unit(1, 'cm'), #change legend key width
+        legend.title = element_text(size=14), #change legend title font size
+        legend.text = element_text(size=12)) + guides(colour = guide_legend(override.aes = list(size=10)))
+my_graph + labs(x = as.character("PC1   9.36%"), y = as.character("PC2   7.86%"))
+ggsave("pca.jpg", dpi = 600)
+
+my_graph <- ggplot(all_data, aes(x=PC1, y=PC2), color=Pop) +
+  geom_point(aes(color=Pop)) + scale_color_brewer(palette="Set1") +
+  theme(panel.background = element_rect(fill = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+
+        legend.key.height = unit(1, 'cm'), #change legend key height
+        legend.key.width = unit(1, 'cm'), #change legend key width
+        legend.title = element_text(size=14), #change legend title font size
+        legend.text = element_text(size=12)) + guides(colour = guide_legend(override.aes = list(size=10)))
+my_graph + labs(x = as.character("PC1   9.36%"), y = as.character("PC2   7.86%"))
+ggsave("pca.race.jpg", dpi = 600)
+
+
+# Plot Admixture
+# library(RColorBrewer)
+# 
+# admixture <- read.csv("newadmix_pop.11.with_pop_number.csv", header=F)
+# colnames(admixture) <- c("taxa", "Sp", paste0("V", as.character(1:11)), "Admixture")
+# admixture_data <- admixture[,3:13]
+# jpeg("admixture.bar.jpg")
+# barplot(t(as.matrix(admixture_data)), col=brewer.pal(n=11, name="Paired"), xlab="Individual #", ylab="Ancestry", border=NA, space=0)
+# dev.off()
+# 

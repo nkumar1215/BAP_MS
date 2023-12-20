@@ -1,0 +1,19 @@
+library(ggbio)
+library(tidyr)
+require(biovizBase)
+require(GenomicRanges)
+
+df <- read.csv("BAP.relative_het.pq.mod2.csv", header=T, row.names=1)
+df <- drop_na(df)
+colnames(df) <- c("Chr", "Start", "Relative_Het")
+df$End <- df$Start + 1
+head(df)
+
+gr.snp <- transformDfToGr(df, seqnames = "Chr", start = "Start", end="End")
+sequence_lengths <- c(80884392, 77742459, 74386277, 68658214, 71854669, 61277060, 65505356, 62686529, 59416394, 61233695)
+names(sequence_lengths) <- names(seqlengths(gr.snp))
+seqlengths(gr.snp) <- sequence_lengths
+
+# autoplot(gr.snp, geom="point", coord="genome", aes(y=MEAN_FST))
+g <- plotGrandLinear(gr.snp, aes(y=Relative_Het), color=c("#000000", "#888888"), geom="point", size=0.5, alpha=0.3, spaceline=TRUE) + theme_clear()
+ggsave("rel_het_plot.pq.png", dpi=600, width=12, height=5, units="in")
