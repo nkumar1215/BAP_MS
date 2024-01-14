@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#PBS -N jointexport_2_04
+#PBS -l select=1:ncpus=4:mem=72gb,walltime=160:00:00
+#PBS -e jointExport_2_04.err
+#PBS -o jointExport_2_04.out
+#PBS -q tillers
+
+# tr '\n' ',' <  /scratch1/jboatw2/BAP_2067/doc/lines.txt | sed 's/,/.CHROM_${i}.vcf.gz -V /g'
+
+BASE_DIR="/scratch1/jboatw2/BAP/variant_calling"
+REFERENCE="${BASE_DIR}/data/references/Sbicolor_454_v3.0.1.fa"
+i="04"
+DATABASE="${BASE_DIR}/results/single_gvcf/BAP_Mace.Chr${i}"
+OUTPUT="${BASE_DIR}/results/joint_calling/BAP.${i}-2.g.vcf"
+TMP="${BASE_DIR}/results/joint_calling/half-2_tmp${i}"
+
+echo "cd ${BASE_DIR}/results/single_gvcf"
+cd ${BASE_DIR}/results/single_gvcf
+echo "$PWD"
+
+if [ ! -e ${TMP} ]
+then
+    mkdir ${TMP}
+fi
+
+~/gatk-4.2.6.1/gatk --java-options "-Xmx60g -XX:+UseParallelGC -XX:ParallelGCThreads=2" GenotypeGVCFs -R ${REFERENCE} -V gendb://${DATABASE} -O ${OUTPUT} --tmp-dir ${TMP} -L Chr${i}:30597602-68658214  # Chr${i}:30597602-68658214

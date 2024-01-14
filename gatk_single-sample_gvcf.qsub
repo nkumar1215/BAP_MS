@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#PBS -N gvcf_call_<SAMPLE>
+#PBS -o gvcf_call_<SAMPLE>.out
+#PBS -e gvcf_call_<SAMPLE>.err
+#PBS -l select=1:ncpus=8:mem=32gb,walltime=140:00:00
+#PBS -q tillers
+
+cd /scratch1/jboatw2/BAP/variant_calling
+
+# samtools view --threads 4 -b ./results/alignments/<SAMPLE>.bam | samtools sort -T <SAMPLE> --output-fmt BAM --threads 4 - > ./results/alignments/<SAMPLE>.sorted.bam
+# samtools index -@ 4 ./results/alignments/<SAMPLE>.sorted.bam
+
+~/gatk-4.2.6.1/gatk --java-options "-XX:ConcGCThreads=4 -XX:ParallelGCThreads=4 -Xmx28g" HaplotypeCaller \
+  -R ./data/references/Sbicolor_454_v3.0.1.fa \
+  -I ./results/recalibrated/<SAMPLE>.recalibrated.bam \
+  -O ./results/single_gvcf/<SAMPLE>.g.vcf.gz \
+  -ERC GVCF \
+  --native-pair-hmm-threads 6
+

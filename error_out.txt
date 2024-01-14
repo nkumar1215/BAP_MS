@@ -1,0 +1,37 @@
+gvcf_call_BTx623.err:A USER ERROR has occurred: Couldn't read file. Error was: ./results/recalibrated/BTx623.recalibrated.bam with exception: Cannot read non-existent file: file:///scratch1/jboatw2/BAP/variant_calling/./results/recalibrated/BTx623.recalibrated.bam
+gvcf_call_PI197542.err:=>> PBS: job killed: walltime 504009 exceeded limit 504000
+gvcf_call_PI19770.err:=>> PBS: job killed: walltime 504007 exceeded limit 504000
+gvcf_call_PI302221.err:=>> PBS: job killed: walltime 504007 exceeded limit 504000
+gvcf_call_PI329338.err:=>> PBS: job killed: walltime 504006 exceeded limit 504000
+gvcf_call_PI329478.err:=>> PBS: job killed: walltime 504002 exceeded limit 504000
+gvcf_call_PI329546.err:=>> PBS: job killed: walltime 504007 exceeded limit 504000
+gvcf_call_PI329551.err:=>> PBS: job killed: walltime 504027 exceeded limit 504000
+gvcf_call_PI329864.err:=>> PBS: job killed: walltime 504003 exceeded limit 504000
+gvcf_call_PI329865.err:=>> PBS: job killed: walltime 504006 exceeded limit 504000
+gvcf_call_PI330182.err:=>> PBS: job killed: walltime 504007 exceeded limit 504000
+gvcf_call_PI330184.err:=>> PBS: job killed: walltime 504020 exceeded limit 504000
+gvcf_call_PI330196.err:=>> PBS: job killed: walltime 504002 exceeded limit 504000
+gvcf_call_PI337689.err:=>> PBS: job killed: walltime 504019 exceeded limit 504000
+gvcf_call_PI452542.err:=>> PBS: job killed: walltime 504023 exceeded limit 504000
+gvcf_call_PI453696.err:=>> PBS: job killed: walltime 504017 exceeded limit 504000
+gvcf_call_PI455280.err:=>> PBS: job killed: walltime 504028 exceeded limit 504000
+gvcf_call_PI474825.err:=>> PBS: job killed: walltime 504021 exceeded limit 504000
+gvcf_call_PI525049.err:=>> PBS: job killed: walltime 504016 exceeded limit 504000
+gvcf_call_PI533752.err:=>> PBS: job killed: walltime 504005 exceeded limit 504000
+gvcf_call_PI533759.err:=>> PBS: job killed: walltime 504015 exceeded limit 504000
+gvcf_call_PI533863.err:=>> PBS: job killed: walltime 504008 exceeded limit 504000
+gvcf_call_PI563348.err:=>> PBS: job killed: walltime 504009 exceeded limit 504000
+gvcf_call_PI566819.err:=>> PBS: job killed: walltime 504011 exceeded limit 504000
+gvcf_call_PI569416.err:=>> PBS: job killed: walltime 504022 exceeded limit 504000
+gvcf_call_PI569423.err:=>> PBS: job killed: walltime 504024 exceeded limit 504000
+gvcf_call_PI569427.err:=>> PBS: job killed: walltime 504004 exceeded limit 504000
+gvcf_call_PI569433.err:=>> PBS: job killed: walltime 504028 exceeded limit 504000
+gvcf_call_PI570053.err:=>> PBS: job killed: walltime 504025 exceeded limit 504000
+gvcf_call_PI570071.err:=>> PBS: job killed: walltime 504023 exceeded limit 504000
+gvcf_call_PI570431.err:=>> PBS: job killed: walltime 504002 exceeded limit 504000
+gvcf_call_PI619838.err:=>> PBS: job killed: walltime 504013 exceeded limit 504000
+gvcf_call_PI620157.err:=>> PBS: job killed: walltime 504007 exceeded limit 504000
+gvcf_call_PI641830.err:=>> PBS: job killed: walltime 504004 exceeded limit 504000
+gvcf_call_PI641862.err:=>> PBS: job killed: walltime 504006 exceeded limit 504000
+gvcf_call_PI655996.err:=>> PBS: job killed: walltime 504003 exceeded limit 504000
+gvcf_call_Rio.err:A USER ERROR has occurred: Couldn't read file. Error was: ./results/recalibrated/Rio.recalibrated.bam with exception: Cannot read non-existent file: file:///scratch1/jboatw2/BAP/variant_calling/./results/recalibrated/Rio.recalibrated.bam

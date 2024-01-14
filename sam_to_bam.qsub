@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#PBS -N samtools_<SAMPLE>
+#PBS -o samtools_<SAMPLE>.out
+#PBS -e samtools_<SAMPLE>.err
+#PBS -l select=1:ncpus=4:mem=20gb:interconnect=1g,walltime=10:00:00
+
+cd /scratch1/jboatw2/Dunn/alignments
+
+samtools view --threads 4 -b <SAMPLE>.sam | samtools sort -T <SAMPLE> --output-fmt BAM --threads 4 - > <SAMPLE>.bam
+

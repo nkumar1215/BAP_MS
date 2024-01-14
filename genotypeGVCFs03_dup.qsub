@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#PBS -N jointGeno03_BAP
+#PBS -e jointGeno03_BAP.err
+#PBS -o jointGeno03_BAP.out
+#PBS -l select=1:ncpus=6:mem=40gb,walltime=160:00:00
+#PBS -q tillers
+
+# tr '\n' ',' <  /scratch1/jboatw2/BAP_2037/doc/lines.txt | sed 's/,/.Chr${i}.vcf.gz -V /g'
+
+BASE_DIR="/scratch1/jboatw2/BAP/variant_calling"
+GVCF_PATH="${BASE_DIR}/results/single_gvcf"
+
+echo "cd ${GVCF_PATH}"
+cd ${GVCF_PATH}
+echo "$PWD"
+
+i="03"
+
+~/gatk-4.2.6.1/gatk GenomicsDBImport --java-options "-Xmx34g -XX:+UseParallelGC -XX:ParallelGCThreads=2" \
+    --genomicsdb-workspace-path ./BAP_Mace.dup.Chr${i} -L Chr${i}:35418937-74386277 \
+    --batch-size 50 --reader-threads 5 --sample-name-map cohort.sample_map --tmp-dir "./tmp03"

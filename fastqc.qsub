@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#PBS -N fastqc_<SAMPLE>
+#PBS -o fastqc_<SAMPLE>.out
+#PBS -e fastqc_<SAMPLE>.err
+#PBS -l select=1:ncpus=4:mem=20gb:interconnect=1g,walltime=10:00:00
+
+cd /scratch1/jboatw2/BAP/variant_calling/results/
+
+if [ ! -e ./fastqc/<SAMPLE>_prefilter/ ]
+then
+    mkdir -p ./fastqc/<SAMPLE>_prefilter/
+fi
+
+singularity run -B /scratch1 ~/singularity_containers/fastqc.simg -o ./fastqc/<SAMPLE>_prefilter/ ../data/fastq/<SAMPLE>_1.fq.gz ./rnaseq/fastq/<SAMPLE>_2.fq.gz 
+
+if [ ! -e ./fastqc/<SAMPLE>_postfilter/ ]
+then
+    mkdir -p ./fastqc/<SAMPLE>_postfilter/
+fi
+
+singularity run -B /scratch1 ~/singularity_containers/fastqc.simg -o ./fastqc/<SAMPLE>_postfilter/ ./rnaseq/filtered/<SAMPLE>_1.filtered.fq.gz ./rnaseq/filtered/<SAMPLE>_2.filtered.fq.gz
+

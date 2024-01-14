@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#PBS -N merge_dup_<NUMBER>
+#PBS -o merge_dup_<NUMBER>.out
+#PBS -e merge_dup_<NUMBER>.err
+#PBS -l select=1:ncpus=4:mem=20gb:interconnect=1g,walltime=10:00:00
+
+cd /scratch1/jboatw2/BAP/variant_calling/results/alignments
+
+DESIGN_FILE="/scratch1/jboatw2/BAP/variant_calling/doc/dup_design.txt"
+DESIGN=$(cat ${DESIGN_FILE} | head -n <NUMBER> | tail -n 1)
+
+IFS=',' read -ra ARRAY <<< "${DESIGN}"
+
+RG1=${ARRAY[0]}
+RG2=${ARRAY[1]}
+SAMPLE=${ARRAY[2]}
+
+echo "Read group 1: $RG1"
+echo "Read group 2: $RG2"
+echo "Sample: $SAMPLE"
+
+samtools view --threads 4 -b ${RG1}.bam | samtools sort -T ${RG1} --output-fmt BAM --threads 4 - > ${RG1}.sorted.bam
+samtools index -@ 4 ${RG1}.sorted.bam
+samtools view --threads 4 -b ${RG2}.bam | samtools sort -T ${RG2} --output-fmt BAM --threads 4 - > ${RG2}.sorted.bam
+samtools index -@ 4 ${RG2}.sorted.bam
+
+# order of bams: out.bam in1.bam in2.bam
+samtools merge -@ 4 ${SAMPLE}.bam ${RG1}.sorted.bam ${RG2}.sorted.bam 

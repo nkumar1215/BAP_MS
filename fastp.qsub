@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#PBS -N fastp_<SAMPLE>
+#PBS -o fastp_<SAMPLE>.out
+#PBS -e fastp_<SAMPLE>.err
+#PBS -l select=1:ncpus=4:mem=32gb:interconnect=1g,walltime=10:00:00
+
+cd /scratch1/jboatw2/BAP/variant_calling/data/
+
+fastp -i ./fastq/raw/<SAMPLE>_R1.fastq.gz -o ./fastq/filtered/<SAMPLE>_1.filt.fq.gz \
+    -I ./fastq/raw/<SAMPLE>_R2.fastq.gz -O ./fastq/filtered/<SAMPLE>_2.filt.fq.gz \
+    --unpaired1 ./fastq/filtered/<SAMPLE>_1.unpaired.filt.fq.gz \
+    --unpaired2 ./fastq/filtered/<SAMPLE>_2.unpaired.filt.fq.gz \
+    --detect_adapter_for_pe \
+    --json ./fastq/log/<SAMPLE>_fastp.json \
+    --thread 4
+
